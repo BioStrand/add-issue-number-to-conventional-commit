@@ -1,0 +1,100 @@
+[project]
+name = "add-issue-number-to-conventional-commit"
+description = "Looks for a issue number in the name of the current branch and adds it to the conventional commit"
+version = "0.0.1"
+authors = [
+    { name = "Sascha Bleidner", email = "sascha@codementors.de" }
+]
+requires-python= ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "tox",
+    "pre-commit",
+]
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+minversion = 3.13.0
+isolated_build = True
+envlist = clean,lint,py
+skipsdist = True
+
+[testenv]
+allowlist_externals = pytest
+setenv =
+    COVERAGE_FILE=.coverage/data.{envname}
+commands =
+    pytest --cov --cov-report=term {posargs} tests/
+
+[testenv:lint]
+skip_install = true
+deps =
+    pre-commit
+commands =
+    pre-commit install
+    pre-commit run --all-files
+
+[testenv:report]
+skip_install = true
+deps =
+    coverage[toml]
+setenv =
+    COVERAGE_FILE=.coverage/data
+commands =
+    coverage combine
+    coverage report
+    coverage html
+
+[testenv:clean]
+skip_install = true
+deps =
+    coverage[toml]
+setenv =
+    COVERAGE_FILE=.coverage/data
+commands = coverage erase
+"""
+
+[tool.coverage.run]
+branch = true
+parallel = true
+data_file = ".coverage/data"
+source = [
+    "add_issue_number_to_conventional_commit",
+]
+omit = [
+    "tests/*",
+]
+
+[tool.coverage.report]
+skip_empty = true
+ignore_errors = true
+exclude_lines = [
+    "if __name__ == .__main__.:",
+]
+
+[tool.coverage.html]
+directory = ".coverage/html"
+
+[tool.coverage.xml]
+output = ".coverage/coverage.xml"
+
+[tool.coverage.json]
+output = ".coverage/coverage.json"
+
+[build-system]
+requires = ["setuptools>=67.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+hook-entrypoint = "add_issue_number_to_conventional_commit:main"
