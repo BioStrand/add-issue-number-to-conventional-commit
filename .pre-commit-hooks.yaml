@@ -1,0 +1,7 @@
+-   id: add-issue-number
+    name: Add issue number to conventional commit between the description and the commit message body
+    description: Looks for a issue number in the name of the current branch and adds it to the conventional commit
+    entry: hook-entrypoint
+    language: python
+    always_run: true
+    stages: [prepare-commit-msg]
