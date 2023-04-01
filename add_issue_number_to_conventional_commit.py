@@ -43,7 +43,7 @@ def add_issue_number(commit_message, issue_number):
         return commit_message
 
     parts = commit_message.split("\n\n", 1)
-    title = parts[0]
+    title = parts[0].strip()
     body = f"{parts[1]}" if len(parts) > 1 else None
 
     if body:
