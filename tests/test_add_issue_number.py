@@ -19,3 +19,9 @@ def test_add_issue_number_is_not_added_if_its_already_there():
     new_content = add_issue_number("chore: initial commit (PRE-10)", "PRE-10")
 
     assert new_content == INITIAL_COMMIT_MESSAGE
+
+
+def test_append_issue_number_with_trimmed_trailing_whitespace():
+    new_content = add_issue_number("chore: initial commit  ", "PRE-10")
+
+    assert new_content == INITIAL_COMMIT_MESSAGE
