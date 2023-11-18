@@ -97,4 +97,4 @@ requires = ["setuptools>=67.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-hook-entrypoint = "add_issue_number_to_conventional_commit:main"
+add-issue-number-to-conventional-commit = "add_issue_number_to_conventional_commit:main"
