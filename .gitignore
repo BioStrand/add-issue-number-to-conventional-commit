@@ -2,3 +2,6 @@
 .venv
 build
 *.iml
+.coverage
+*.egg-info/
+*__pycache__/

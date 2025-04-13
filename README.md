@@ -1,12 +1,16 @@
 # Conventional Commits Hook
++ [![cov](https://biostrand.github.io/add-issue-number-to-conventional-commit/badges/coverage.svg)](https://github.com/BioStrand/add-issue-number-to-conventional-commit/actions)
 
 Track your issue number in your [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 This [pre-commit](https://pre-commit.com) compatible hook parses common issue numbers (e.g. `pre-10`) from your branch name
-and appends it to your [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/).
+and appends it to your [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) according to the internal
+convention used at BioStrand.
+
+This is a fork from https://gitlab.com/codementors/pre-commit/add-issue-number-to-conventional-commit.
 
 ## Example:
 A commit with the commit message `feat: Initial commit`on branch `feat/pre-10-awesome-feature`
-will be expanded to: `feat: Initial commit (PRE-10)`. 
+will be expanded to: `feat: PRE-10 - Initial commit`. 
 
 ## Use this hook
 
@@ -14,8 +18,8 @@ Add this hook to your `.pre-commit-config.yaml`:
 
 ```yaml
 repos:
-  - repo: https://gitlab.com/codementors/pre-commit/add-issue-number-to-conventional-commit
-    rev: v0.0.2 # Insert latest version from https://gitlab.com/codementors/pre-commit/add-issue-number-to-conventional-commit/-/tags
+  - repo: https://github.com/BioStrand/add-issue-number-to-conventional-commit
+    rev: v0.0.2 # Insert latest version from https://github.com/BioStrand/add-issue-number-to-conventional-commit/-/tags
     hooks:
       - id: add-issue-number
 ```
