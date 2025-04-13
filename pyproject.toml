@@ -36,7 +36,7 @@ allowlist_externals = pytest
 setenv =
     COVERAGE_FILE=.coverage/data.{envname}
 commands =
-    pytest --cov --cov-report=term {posargs} tests/
+    pytest --cov --cov-report=json {posargs} tests/
 
 [testenv:lint]
 skip_install = true
