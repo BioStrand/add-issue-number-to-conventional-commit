@@ -1,4 +1,5 @@
 # Conventional Commits Hook
++ [![cov](https://biostrand.github.io/add-issue-number-to-conventional-commit/badges/coverage.svg)](https://github.com/BioStrand/add-issue-number-to-conventional-commit/actions)
 
 Track your issue number in your [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 This [pre-commit](https://pre-commit.com) compatible hook parses common issue numbers (e.g. `pre-10`) from your branch name
