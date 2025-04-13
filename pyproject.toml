@@ -3,7 +3,7 @@ name = "add-issue-number-to-conventional-commit"
 description = "Looks for a issue number in the name of the current branch and adds it to the conventional commit"
 version = "0.0.1"
 authors = [
-    { name = "Sascha Bleidner", email = "sascha@codementors.de" }
+    { name = "Michael Best", email = "mbest@ipatherapeutics.com" }
 ]
 requires-python= ">=3.9"
 dependencies = []
@@ -12,6 +12,7 @@ dependencies = []
 dev = [
     "pytest",
     "pytest-cov",
+    "pytest-mock",
     "tox",
     "pre-commit",
 ]

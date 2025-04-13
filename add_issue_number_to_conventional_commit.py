@@ -20,7 +20,7 @@ def main():
             f.write(new_content)
 
 
-def get_current_branch_name():
+def get_current_branch_name() -> str:
     try:
         branch_name = subprocess.check_output(
             ["git", "symbolic-ref", "--short", "HEAD"]
@@ -30,7 +30,7 @@ def get_current_branch_name():
         print(e)
 
 
-def find_issue_number_in_branch_name(branch):
+def find_issue_number_in_branch_name(branch: str) -> str:
     if branch is None:
         return None
     matches = re.findall("[a-zA-Z0-9]{1,10}-\\d{1,5}", branch)
@@ -38,21 +38,23 @@ def find_issue_number_in_branch_name(branch):
         return matches[0].upper()
 
 
-def add_issue_number(commit_message, issue_number):
+def add_issue_number(commit_message: str, issue_number: str) -> str:
     if issue_number and issue_number in commit_message:
-        return commit_message
+        return commit_message.strip()
 
     if "# Please enter the commit message" in commit_message:
-        return f"({issue_number}) {commit_message}"
+        return f"{issue_number} - {commit_message}"
 
     parts = commit_message.split("\n\n", 1)
     title = parts[0].strip()
+    commit_type, description = tuple(map(str.strip, title.split(":", maxsplit=1)))
+    title = f"{commit_type}: {issue_number} - {description}"
     body = f"{parts[1]}" if len(parts) > 1 else None
 
     if body:
-        return f"{title} ({issue_number})\n\n{body}"
+        return f"{title}\n\n{body}"
     else:
-        return f"{title} ({issue_number})"
+        return title
 
 
 if __name__ == "__main__":
