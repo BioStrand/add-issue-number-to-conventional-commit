@@ -38,7 +38,7 @@ def test_get_current_branch_name_empty_output(mocker):
         ("a0b1c-1", "A0B1C-1"),
     ],
 )
-@pytest.mark.parametrize("description_separator", ["-", ":"])
+@pytest.mark.parametrize("description_separator", ["-", ":", "/"])
 def test_find_issue_number_in_branch_name(
     issue_number: str,
     expected_issue_number: str,
@@ -60,7 +60,7 @@ def test_find_issue_number_in_branch_name(
         ("a0b1c-1", "A0B1C-1"),
     ],
 )
-@pytest.mark.parametrize("description_separator", ["-", ":"])
+@pytest.mark.parametrize("description_separator", ["-", ":", "/"])
 def test_find_issue_number_in_branch_name_without_commit_type(
     issue_number: str,
     expected_issue_number: str,
@@ -74,7 +74,7 @@ def test_find_issue_number_in_branch_name_without_commit_type(
 
 
 @pytest.mark.parametrize("invalid_issue_number", ["unknown", "", "A-"])
-@pytest.mark.parametrize("description_separator", ["-", ":"])
+@pytest.mark.parametrize("description_separator", ["-", ":", "/"])
 def test_return_none_if_no_issue_number_in_branch_name(
     invalid_issue_number: str,
     description_separator: str,
@@ -85,3 +85,53 @@ def test_return_none_if_no_issue_number_in_branch_name(
 
 def test_return_none_if_branch_is_none() -> None:
     assert find_issue_number_in_branch_name(None) is None
+
+
+@pytest.mark.parametrize(
+    "branch_name",
+    [
+        "feat/!@#$%^&*()-_+",
+        "fix/!@#$%^&*()-_+",
+        "feat/!@#$%^&*()-_+/description",
+        "fix/!@#$%^&*()-_+/description",
+    ],
+)
+def test_find_issue_number_in_branch_name_with_special_characters_returns_none(
+    branch_name,
+) -> None:
+    assert find_issue_number_in_branch_name(branch_name) is None
+
+
+@pytest.mark.parametrize(
+    "branch_name,expected_issue_number",
+    [
+        ("feat/SIXSEVEN-12345", "XSEVEN-12345"),
+        ("fix/SIXSEVEN-12345", "XSEVEN-12345"),
+        ("feat/SIXSEVEN-12345/description", "XSEVEN-12345"),
+        ("fix/SIXSEVEN-12345/description", "XSEVEN-12345"),
+        ("SIXSEVEN-12345", "XSEVEN-12345"),
+        ("SIXSEVEN-12345", "XSEVEN-12345"),
+        ("SIXSEVEN-12345/description", "XSEVEN-12345"),
+        ("SIXSEVEN-12345/description", "XSEVEN-12345"),
+        ("feat/LT6C-1234567", "LT6C-12345"),
+        ("fix/LT6C-1234567", "LT6C-12345"),
+        ("feat/LT6C-1234567/description", "LT6C-12345"),
+        ("fix/LT6C-1234567/description", "LT6C-12345"),
+        ("LT6C-1234567", "LT6C-12345"),
+        ("LT6C-1234567", "LT6C-12345"),
+        ("LT6C-1234567/description", "LT6C-12345"),
+        ("LT6C-1234567/description", "LT6C-12345"),
+        ("feat/LONGBUSINESS-KEY-12345678901234567890", "KEY-12345"),
+        ("fix/LONGBUSINESS-KEY-12345678901234567890", "KEY-12345"),
+        ("feat/LONGBUSINESS-KEY-12345678901234567890/description", "KEY-12345"),
+        ("fix/LONGBUSINESS-KEY-12345678901234567890/description", "KEY-12345"),
+        ("LONGBUSINESS-KEY-12345678901234567890", "KEY-12345"),
+        ("LONGBUSINESS-KEY-12345678901234567890", "KEY-12345"),
+        ("LONGBUSINESS-KEY-12345678901234567890/description", "KEY-12345"),
+        ("LONGBUSINESS-KEY-12345678901234567890/description", "KEY-12345"),
+    ],
+)
+def test_find_issue_number_in_branch_name_with_long_business_keys_success(
+    branch_name, expected_issue_number
+) -> None:
+    assert find_issue_number_in_branch_name(branch_name) == expected_issue_number
