@@ -33,7 +33,7 @@ def get_current_branch_name() -> str:
 def find_issue_number_in_branch_name(branch: str) -> str:
     if branch is None:
         return None
-    matches = re.findall("[a-zA-Z0-9]{1,10}-\\d{1,5}", branch)
+    matches = re.findall("[a-zA-Z0-9]{1,6}-\\d{1,5}", branch)
     if len(matches) > 0:
         return matches[0].upper()
 
