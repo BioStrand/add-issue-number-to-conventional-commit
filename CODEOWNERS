@@ -1,0 +1,7 @@
+# Block 1: Default fallback (all files)
+* @mbestipa @mbestipa
+# Block 2: Python runtime ownership
+environment.yml @mbestipa
+environment.dev.yml @mbestipa
+# Block 3: Repo-specific ownership (customize as needed)
+# --- Place your custom patterns below this line ---
